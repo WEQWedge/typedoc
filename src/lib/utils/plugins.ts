@@ -63,16 +63,11 @@ export class PluginHost extends AbstractComponent<Application> {
          * Find all parent folders containing a `node_modules` subdirectory.
          */
         function discover() {
-            let path = process.cwd(), previous: string;
-            do {
-                const modules = Path.join(path, 'node_modules');
-                if (FS.existsSync(modules) && FS.statSync(modules).isDirectory()) {
-                    discoverModules(modules);
-                }
-
-                previous = path;
-                path = Path.resolve(Path.join(previous, '..'));
-            } while (previous !== path);
+            let path = process.cwd();
+            const modules = Path.join(path, 'node_modules');
+            if (FS.existsSync(modules) && FS.statSync(modules).isDirectory()) {
+                discoverModules(modules);
+            }
         }
 
         /**
